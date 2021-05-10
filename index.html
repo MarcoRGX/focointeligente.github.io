@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto IOT Foco Inteligente</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Itim&family=Pangolin&display=swap');
+        body{
+            background: #232526;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+        .titulo{
+            font-family: 'Itim', cursive;
+            color: aliceblue;
+            font-size: 200%;
+            margin-top: -10%;
+        }
+        .texto{
+            font-family: 'Itim', cursive;
+            color: aliceblue;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+  <div id="app" align="center">
+    <form @submit.prevent="enviarMensaje">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0099ff" fill-opacity="0.2" d="M0,128L30,144C60,160,120,192,180,176C240,160,300,96,360,80C420,64,480,96,540,128C600,160,660,192,720,176C780,160,840,96,900,64C960,32,1020,32,1080,53.3C1140,75,1200,117,1260,154.7C1320,192,1380,224,1410,240L1440,256L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z"></path></svg>
+        <div class="titulo">Bienvenido Profe</div>
+        <br>
+        <div class="texto">Estado del Foco:</div>
+        <br>
+        <button type="submit" class="btn btn-success" @click="enviarEncendido">Encender</button>
+        <br><br>
+        <button type="button" class="btn btn-danger" @click="enviarApagado">Apagar</button>
+      </form>
+  </div>
+
+  <br><br><br><br><br>
+  <div class="texto">Desarrollado por el equipo CHIDO ISIC 3081</div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- The core Firebase JS SDK is always required and must be listed first 
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>-->
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase.js"></script>
+
+
+<script>
+var firebaseConfig = {
+  apiKey: "AIzaSyCn0EWmNL1gFGXqDCJc4GnlzOr2CMlm48g",
+  authDomain: "iotfoco.firebaseapp.com",
+  databaseURL: "https://iotfoco-default-rtdb.firebaseio.com",
+  projectId: "iotfoco",
+  storageBucket: "iotfoco.appspot.com",
+  messagingSenderId: "387963969896",
+  appId: "1:387963969896:web:da9689b391328116d476dd"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+const app = new Vue({
+
+    el: "#app",
+
+    data: {
+    prender: 1,
+    apagar: 0
+    },
+
+    methods: {
+    enviarEncendido() {
+    firebase.database().ref("/foco")
+    .set({
+        status: parseInt(this.prender),
+    });
+    },
+    enviarApagado() {
+        firebase.database().ref("/foco")
+        .set({
+            status: parseInt(this.apagar),
+        });
+    }
+    }
+});
+
+</script>
+</html>
